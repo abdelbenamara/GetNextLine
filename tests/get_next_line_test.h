@@ -6,7 +6,7 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:59:02 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/13 04:12:16 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/01/15 04:45:36 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 
 void	ft_assert(int index, int assertion);
 
-void	get_next_line_test(const char *filename);
+void	gnl_wrong_test(void);
+void	gnl_empty_test(void);
+void	gnl_simple_test(void);
+void	gnl_multiple_test(void);
+void	gnl_no_ascii_test(void);
+void	gnl_horizontal_test(void);
+void	gnl_vertical_test(void);
 
 #endif
