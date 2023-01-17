@@ -6,7 +6,7 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 01:35:25 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/17 01:45:25 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/01/17 02:20:53 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*get_next_line(int fd)
 	*line = '\0';
 	while (!ft_buf_to_line(buf, &line))
 	{
-		if (!*(buf->content))
+		if (!*buf->content)
 		{
 			read_size = read(fd, buf->content, BUFFER_SIZE);
 			if (*line && !read_size)
@@ -119,7 +119,7 @@ char	*get_next_line(int fd)
 			buf->content[read_size] = '\0';
 		}
 	}
-	if (!*(buf->content))
+	if (!*buf->content)
 		return (ft_buf_pop(&buf), line);
 	return (line);
 }
