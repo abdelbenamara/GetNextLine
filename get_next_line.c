@@ -6,68 +6,83 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 01:35:25 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/17 02:20:53 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:33:35 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static uint8_t	ft_buf_init(t_buf **buf, int fd)
+static uint8_t	ft_dfb_lstadd_first(t_list **lst, int fd)
 {
-	t_buf	*new;
+	t_list	*new;
+	t_dfb	*content;
 
-	new = malloc(sizeof(t_buf));
-	if (!new)
+	content = malloc(sizeof(t_dfb));
+	if (!content)
 		return (0);
-	new->fd = fd;
-	new->content = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!new->content)
-		return (free(new), 0);
-	*new->content = '\0';
-	new->next = NULL;
-	*buf = new;
+	content->fd = fd;
+	content->buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!content->buffer)
+		return (free(content), 0);
+	*content->buffer = '\0';
+	new = ft_lstnew(content);
+	if (!new)
+		return (free(content->buffer), free(content), 0);
+	ft_lstadd_front(lst, new);
 	return (1);
 }
 
-static uint8_t	ft_buf_poll(t_buf **lst, const int fd)
+static uint8_t	ft_dfb_lstpeek(t_list **lst, const int fd)
 {
-	t_buf	*buf;
-	t_buf	*prev;
+	t_list	*item;
+	t_list	*prev;
 
-	buf = *lst;
+	item = *lst;
 	prev = NULL;
-	while (buf)
+	while (item)
 	{
-		if (buf->fd == fd)
+		if (((t_dfb *) item->content)->fd == fd)
 		{
 			if (prev)
 			{
-				prev->next = buf->next;
-				buf->next = *lst;
+				prev->next = item->next;
+				item->next = *lst;
 			}
-			*lst = buf;
+			*lst = item;
 			return (1);
 		}
-		prev = buf;
-		buf = prev->next;
+		prev = item;
+		item = prev->next;
 	}
-	if (!ft_buf_init(&buf, fd))
+	if (!ft_dfb_lstadd_first(lst, fd))
 		return (0);
-	buf->next = *lst;
-	*lst = buf;
 	return (1);
 }
 
-static uint8_t	ft_buf_to_line(t_buf *buf, char **line)
+static void	ft_dfb_lstpop(t_list **lst)
+{
+	t_list	*item;
+
+	if (*lst)
+	{
+		item = *lst;
+		*lst = item->next;
+		free(((t_dfb *) item->content)->buffer);
+		free(item->content);
+		free(item);
+	}
+}
+
+static uint8_t	ft_line_buffer_sync(char **line, char *buffer)
 {
 	size_t	i;
 	size_t	len;
 	char	*tmp;
 
-	if (!*buf->content)
+	if (!*buffer)
 		return (0);
 	i = 0;
-	while (buf->content[i] && buf->content[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 		++i;
 	len = ft_strlen(*line);
 	tmp = malloc((len + i + 2) * sizeof(char));
@@ -75,51 +90,38 @@ static uint8_t	ft_buf_to_line(t_buf *buf, char **line)
 		return (0);
 	ft_strlcpy(tmp, *line, len + 1);
 	free(*line);
-	ft_strlcpy(tmp + len, buf->content, i + 2);
+	ft_strlcpy(tmp + len, buffer, i + 2);
 	*line = tmp;
-	if (buf->content[i] == '\n')
-		return (ft_strlcpy(buf->content, buf->content + i + 1, BUFFER_SIZE), 1);
-	return (ft_strlcpy(buf->content, buf->content + i, BUFFER_SIZE), 0);
-}
-
-static void	ft_buf_pop(t_buf **lst)
-{
-	t_buf	*buf;
-
-	if (*lst)
-	{
-		buf = *lst;
-		*lst = buf->next;
-		free(buf->content);
-		free(buf);
-	}
+	if (buffer[i] == '\n')
+		return (ft_strlcpy(buffer, buffer + i + 1, BUFFER_SIZE), 1);
+	return (ft_strlcpy(buffer, buffer + i, BUFFER_SIZE), 0);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_buf	*buf = NULL;
+	static t_list	*lst = NULL;
 	char			*line;
 	ssize_t			read_size;
 
 	line = malloc(1 * sizeof(char));
 	if (!line)
 		return (NULL);
-	if (fd < 0 || !ft_buf_poll(&buf, fd))
-		return (ft_buf_pop(&buf), free(line), NULL);
+	if (fd < 0 || !ft_dfb_lstpeek(&lst, fd))
+		return (ft_dfb_lstpop(&lst), free(line), NULL);
 	*line = '\0';
-	while (!ft_buf_to_line(buf, &line))
+	while (!ft_line_buffer_sync(&line, ((t_dfb *) lst->content)->buffer))
 	{
-		if (!*buf->content)
+		if (!*((t_dfb *) lst->content)->buffer)
 		{
-			read_size = read(fd, buf->content, BUFFER_SIZE);
+			read_size = read(fd, ((t_dfb *) lst->content)->buffer, BUFFER_SIZE);
 			if (*line && !read_size)
-				return (ft_buf_pop(&buf), line);
+				return (ft_dfb_lstpop(&lst), line);
 			else if (read_size <= 0)
-				return (ft_buf_pop(&buf), free(line), NULL);
-			buf->content[read_size] = '\0';
+				return (ft_dfb_lstpop(&lst), free(line), NULL);
+			((t_dfb *) lst->content)->buffer[read_size] = '\0';
 		}
 	}
-	if (!*buf->content)
-		return (ft_buf_pop(&buf), line);
+	if (!*((t_dfb *) lst->content)->buffer)
+		return (ft_dfb_lstpop(&lst), line);
 	return (line);
 }
