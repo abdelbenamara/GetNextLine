@@ -6,7 +6,7 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:10:03 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/17 01:49:56 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:32:52 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_buf
+typedef struct s_list
 {
-	int				fd;
-	char			*content;
-	struct s_buf	*next;
-}	t_buf;
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+
+typedef struct s_dfb
+{
+	int		fd;
+	char	*buffer;
+}	t_dfb;
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_list **lst, t_list *new);
 
 char	*get_next_line(int fd);
 
