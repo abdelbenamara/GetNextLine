@@ -6,13 +6,13 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:09:03 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/17 19:33:45 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/01/18 00:42:39 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static uint8_t	ft_dfb_lstadd_first(t_list **lst, int fd)
+static uint8_t	ft_dfb_lstadd_first(t_list **lst, const int fd)
 {
 	t_list	*new;
 	t_dfb	*content;
@@ -47,8 +47,8 @@ static uint8_t	ft_dfb_lstpeek(t_list **lst, const int fd)
 			{
 				prev->next = item->next;
 				item->next = *lst;
+				*lst = item;
 			}
-			*lst = item;
 			return (1);
 		}
 		prev = item;
