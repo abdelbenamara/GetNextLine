@@ -6,7 +6,7 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:11:06 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/16 23:49:16 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:21:56 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,24 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	while (*s)
 		++s;
 	return (s - src);
+}
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*item;
+
+	item = malloc(sizeof(t_list));
+	if (!item)
+		return (NULL);
+	item->content = content;
+	item->next = NULL;
+	return (item);
+}
+
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (!lst || !new)
+		return ;
+	new->next = *lst;
+	*lst = new;
 }
