@@ -6,7 +6,7 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 02:53:46 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/15 04:06:38 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/01/17 00:01:41 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(void)
 	char	*s;
 
 	write(STDOUT_FILENO, "Type then press enter, type 'q' to exit :\n", 42);
+	s = NULL;
 	while (!s || strcmp(s, "q\n"))
 	{
 		free(s);

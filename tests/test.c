@@ -6,7 +6,7 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 22:02:16 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/15 04:45:23 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:55:36 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	main(void)
 	printf("\nProject: " BOLDMAGENTA "Get Next Line\n");
 	printf(RESET "\n-\nPart 1: " BOLDMAGENTA "Mandatory\n");
 	printf(BOLDCYAN "\nFile" RESET "\t\t\t" BOLDCYAN "Tests\n");
-	gnl_wrong_test();
+	gnl_invalid_test();
 	gnl_empty_test();
 	gnl_simple_test();
 	gnl_multiple_test();
-	gnl_no_ascii_test();
 	gnl_horizontal_test();
 	gnl_vertical_test();
 #ifdef BONUS
 	printf("\n" RESET "\n-\nPart 2: " BOLDMAGENTA "Bonus" RESET "\n");
 	printf(BOLDCYAN "\nFile" RESET "\t\t\t" BOLDCYAN "Tests" RESET "\n");
+	gnl_bonus_test();
 #endif
 	printf("\n" RESET "\n");
 	return (0);
