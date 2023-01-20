@@ -1,0 +1,3 @@
+[submodule "gnlTester"]
+	path = gnlTester
+	url = https://github.com/Tripouille/gnlTester.git
