@@ -6,7 +6,7 @@
 #    By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 21:43:30 by abenamar          #+#    #+#              #
-#    Updated: 2023/01/17 01:24:25 by abenamar         ###   ########.fr        #
+#    Updated: 2023/01/20 11:57:47 by abenamar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -159,9 +159,18 @@ norm:
 	@echo "\033[0;36m######################################## norminette ########################################\033[0m"
 	@cd $(CURDIR)/.. && norminette $$(ls | grep "\.c\|\.h")
 
+community-tests:
+	@if [ ! -d "gnlTester" ] || [ -z "$$(ls -A gnlTester)" ]; then \
+		git submodule update --init gnlTester; \
+		sed -i 's/\(\.\.\)/\1\/\1/g' gnlTester/Makefile; \
+		sed -i 's/: update/:/g' gnlTester/Makefile; \
+	fi
+	@echo "\033[0;36m################################## Tripouille : gnlTester ##################################\033[0m"
+	@$(MAKE) -C gnlTester/
+
 bonus: $(NAME)
 
-all: norm valgrind-test-all valgrind-stdin-all
+all: norm valgrind-test valgrind-stdin community-tests
 
 clean:
 	$(RM) $(NAME)
@@ -171,4 +180,4 @@ fclean: clean
 
 re: all
 
-.PHONY: re clean all bonus so norm valgrind-test valgrind-test-1 valgrind-test-42 valgrind-test-10M valgrind-test-all test test-1 test-42 test-10M test-all valgrind-stdin valgrind-stdin-1 valgrind-stdin-42 valgrind-stdin-9999 valgrind-stdin-10M valgrind-stdin-all stdin stdin-1 stdin-42 stdin-9999 stdin-10M stdin-all .FORCE
+.PHONY: re clean all bonus community-tests norm valgrind-test valgrind-test-1 valgrind-test-42 valgrind-test-10M valgrind-test-all test test-1 test-42 test-10M test-all valgrind-stdin valgrind-stdin-1 valgrind-stdin-42 valgrind-stdin-9999 valgrind-stdin-10M valgrind-stdin-all stdin stdin-1 stdin-42 stdin-9999 stdin-10M stdin-all .FORCE
