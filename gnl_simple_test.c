@@ -6,13 +6,13 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 18:57:37 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/15 22:07:56 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:04:55 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_test.h"
 
-void	gnl_simple_test()
+void	gnl_simple_test(void)
 {
 	const char	*filename = "files/simple";
 	const int	fd = open(filename, O_RDONLY);

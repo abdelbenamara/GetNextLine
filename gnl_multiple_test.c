@@ -6,13 +6,13 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 04:40:30 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/17 00:14:30 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:04:48 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_test.h"
 
-void	gnl_multiple_test()
+void	gnl_multiple_test(void)
 {
 	const char	*filename = "files/multiple";
 	const int	fd = open(filename, O_RDONLY);

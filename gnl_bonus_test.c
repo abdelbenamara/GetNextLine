@@ -6,13 +6,13 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:13:13 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/15 15:22:24 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:03:47 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_test.h"
 
-void	gnl_bonus_test()
+void	gnl_bonus_test(void)
 {
 	const int	fd1 = open("files/bonus1", O_RDONLY);
 	const int	fd2 = open("files/bonus2", O_RDONLY);

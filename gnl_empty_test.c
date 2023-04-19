@@ -6,13 +6,13 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 18:58:37 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/13 21:44:05 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:04:31 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_test.h"
 
-void	gnl_empty_test()
+void	gnl_empty_test(void)
 {
 	const char	*filename = "files/empty";
 	const int	fd = open(filename, O_RDONLY);

@@ -6,13 +6,13 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 22:00:43 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/14 23:41:25 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:05:33 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_test.h"
 
-void	gnl_vertical_test()
+void	gnl_vertical_test(void)
 {
 	const char	*filename = "files/vertical";
 	const int	fd = open(filename, O_RDONLY);
@@ -23,7 +23,7 @@ void	gnl_vertical_test()
 		exit(1);
 	s = get_next_line(fd);
 	ft_assert(1, !strcmp(s, "\n"));
-	while (s && !strcmp(s, "\n"))
+	while (s)
 	{
 		free(s);
 		s = get_next_line(fd);

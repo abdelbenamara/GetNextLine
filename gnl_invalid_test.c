@@ -6,13 +6,13 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 23:39:55 by abenamar          #+#    #+#             */
-/*   Updated: 2023/01/17 19:44:21 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:04:45 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_test.h"
 
-void	gnl_invalid_test()
+void	gnl_invalid_test(void)
 {
 	const char	*filename = "invalid";
 	int			fd;
