@@ -6,7 +6,7 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 01:35:25 by abenamar          #+#    #+#             */
-/*   Updated: 2023/04/19 06:22:05 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:20:27 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*get_next_line(int fd)
 		if (!*buffer[fd])
 		{
 			read_size = read(fd, buffer[fd], BUFFER_SIZE);
-			if (!*line && read_size <= 0)
+			if ((!*line && !read_size) || read_size < 0)
 				return (free(buffer[fd]), buffer[fd] = NULL, free(line), NULL);
 			buffer[fd][read_size] = '\0';
 		}
