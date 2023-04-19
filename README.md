@@ -9,10 +9,10 @@ git clone https://github.com/abdelbenamara/GetNextLine.git tests/
 
 ## Usage
 ```
-make all
+[BUFFER_SIZE=<size>] make all
 ```
 ```
-make bonus all
+[BUFFER_SIZE=<size>] make bonus all
 ```
 
 ## Options
