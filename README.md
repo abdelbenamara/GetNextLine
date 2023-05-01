@@ -8,6 +8,7 @@ git clone https://github.com/abdelbenamara/GetNextLine.git tests/
 ```
 
 ## Usage
+
 ```
 [BUFFER_SIZE=<size>] make all
 ```
