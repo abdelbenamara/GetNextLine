@@ -6,7 +6,7 @@
 /*   By: abenamar <abenamar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 01:35:25 by abenamar          #+#    #+#             */
-/*   Updated: 2023/04/19 07:20:27 by abenamar         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:55:03 by abenamar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ static uint8_t	ft_line_init(char **line, size_t len)
 static uint8_t	ft_line_update(char **line, size_t len, char *buf, size_t idx)
 {
 	char	*tmp;
-	uint8_t	is_line_full;
 
-	is_line_full = (len + idx + 1 >= (len / LINE_SIZE + 1) * LINE_SIZE);
-	if (buf[idx] != '\n' && !is_line_full)
+	if (buf[idx] != '\n'
+		&& !(len + idx + 1 >= (len / LINE_SIZE + 1) * LINE_SIZE))
 		ft_strlcpy(*line + len, buf, idx + 2);
 	else
 	{
@@ -48,8 +47,7 @@ static uint8_t	ft_line_update(char **line, size_t len, char *buf, size_t idx)
 			if (!tmp)
 				return (0);
 		}
-		else if (is_line_full
-			&& !ft_line_init(&tmp, ((len + idx) / LINE_SIZE + 1) * LINE_SIZE))
+		else if (!ft_line_init(&tmp, ((len + idx) / LINE_SIZE + 1) * LINE_SIZE))
 			return (0);
 		ft_strlcpy(tmp, *line, len + 1);
 		ft_strlcpy(tmp + len, buf, idx + 2);
